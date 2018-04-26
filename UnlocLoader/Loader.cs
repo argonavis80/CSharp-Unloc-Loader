@@ -39,7 +39,7 @@ namespace UnlocLoader
                 var countries = _countryLoader.Load(folder);
                 var locations = _locationLoader.Load(folder, countries);
 
-                return new UnlocLoaderResult(locations, countries.Select(kvp => kvp.Value).ToList());
+                return new UnlocLoaderResult(locations, countries);
             }
         }
 

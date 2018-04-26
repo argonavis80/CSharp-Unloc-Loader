@@ -4,14 +4,19 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using MoreLinq;
 
 namespace UnlocLoader
 {
     public class LocationLoader : LoaderBase
     {
-        public List<Location> Load(string folder, Dictionary<string, Country> countries)
+        public List<Location> Load(string folder, List<Country> countries)
         {
             var directory = new DirectoryInfo(folder);
+
+            var countryDict = countries
+                .DistinctBy(c => c.Id)
+                .ToDictionary(c => c.Id, c => c);
 
             EmitInfo("Parse locations.");
 
@@ -40,11 +45,7 @@ namespace UnlocLoader
                             if (string.IsNullOrWhiteSpace(tokens[2]) && string.IsNullOrWhiteSpace(tokens[6]))
                                 continue; // This line is a country. Skip.
 
-                            //? This controls if only locations marked as port should be considered.
-                            //x if (tokens[6].Substring(0, 1) == "-")
-                            //x    continue;
-
-                            var location = ParsePort(tokens, countries);
+                            var location = ParseLocation(tokens, countryDict);
 
                             if (location != null)
                             {
@@ -63,7 +64,7 @@ namespace UnlocLoader
             return locations;
         }
 
-        private Location ParsePort(IReadOnlyList<string> tokens, IReadOnlyDictionary<string, Country> countries)
+        private Location ParseLocation(IReadOnlyList<string> tokens, IReadOnlyDictionary<string, Country> countries)
         {
             var regex = new Regex(@"^\d{4}[NS] \d{5}[EW]$");
 
