@@ -1,6 +1,6 @@
 using System;
 
-namespace UnlocLoader
+namespace UnlocLoader.Core
 {
     public class LogEmiter
     {

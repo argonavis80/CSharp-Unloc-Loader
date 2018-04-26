@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace UnlocLoader.App
+namespace UnlocLoader.Sample
 {
     internal class Program
     {
         private static void Main()
         {
-            var loader = new Loader();
+            var loader = new UnlocLoader();
 
             loader.OnWarn += (sender, s) => Console.WriteLine($"Warn: {s}");
             loader.OnInfo += (sender, s) => Console.WriteLine($"Info: {s}");

@@ -1,4 +1,4 @@
-﻿namespace UnlocLoader
+﻿namespace UnlocLoader.Model
 {
     public class Location
     {

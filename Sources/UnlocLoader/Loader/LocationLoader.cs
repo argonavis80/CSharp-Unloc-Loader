@@ -5,8 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using MoreLinq;
+using UnlocLoader.Core;
+using UnlocLoader.Model;
 
-namespace UnlocLoader
+namespace UnlocLoader.Loader
 {
     public class LocationLoader : LoaderBase
     {

@@ -1,7 +1,7 @@
 using System.IO;
 using System.Net;
 
-namespace UnlocLoader
+namespace UnlocLoader.Core
 {
     public class FileDownloader
     {

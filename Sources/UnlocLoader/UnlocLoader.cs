@@ -1,11 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
+using UnlocLoader.Core;
+using UnlocLoader.Loader;
 
 namespace UnlocLoader
 {
-    public class Loader : LogEmiter
+    public class UnlocLoader : LogEmiter
     {
         private const string UnlocFileUrl = "http://www.unece.org/fileadmin/DAM/cefact/locode/loc172csv.zip";
 
@@ -13,7 +14,7 @@ namespace UnlocLoader
         private readonly LocationLoader _locationLoader;
         private readonly FileDownloader _fileDownloader;
 
-        public Loader()
+        public UnlocLoader()
         {
             _countryLoader = new CountryLoader();
             _locationLoader = new LocationLoader();
@@ -28,7 +29,7 @@ namespace UnlocLoader
             _locationLoader.OnTrace += (sender, s) => OnTrace?.Invoke(sender, s);
         }
 
-        public UnlocLoaderResult Load()
+        public LoaderResult Load()
         {
             using (var workspace = new Workspace())
             {
@@ -39,7 +40,7 @@ namespace UnlocLoader
                 var countries = _countryLoader.Load(folder);
                 var locations = _locationLoader.Load(folder, countries);
 
-                return new UnlocLoaderResult(locations, countries);
+                return new LoaderResult(locations, countries);
             }
         }
 

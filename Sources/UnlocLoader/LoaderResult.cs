@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using UnlocLoader.Model;
 
 namespace UnlocLoader
 {
-    public class UnlocLoaderResult
+    public class LoaderResult
     {
-        internal UnlocLoaderResult(List<Location> locations, List<Country> countries)
+        internal LoaderResult(List<Location> locations, List<Country> countries)
         {
             Locations = locations;
             Countries = countries;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace UnlocLoader
+namespace UnlocLoader.Core
 {
     public class Workspace : IDisposable
     {
