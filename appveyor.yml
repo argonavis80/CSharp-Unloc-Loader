@@ -8,6 +8,10 @@ before_build:
   - nuget restore Sources\UnlocLoader.sln
   - ps: gitversion /l console /output buildserver /updateAssemblyInfo
 
+platform: Any CPU
+
+configuration: Release
+
 build:
   project: Sources\UnlocLoader.sln
 
