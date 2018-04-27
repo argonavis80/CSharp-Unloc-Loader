@@ -1,0 +1,17 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>CSharp-Unloc-Loader</id>
+    <version>$version$</version>
+    <title>CSharp-Unloc-Loader</title>
+    <authors>Henrik Alfke</authors>
+    <owners>Henrik Alfke</owners>
+    <licenseUrl>https://github.com/argonavis80/CSharp-Unloc-Loader/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/argonavis80/CSharp-Unloc-Loader</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Fetch UN location codes (UN/LOCODE) from UN server</description>
+    <!--<releaseNotes>Summary of changes made in this release of the package.</releaseNotes>-->
+    <copyright>Copyright 2018</copyright>
+    <tags>UN location codes loader</tags>
+  </metadata>
+</package>
