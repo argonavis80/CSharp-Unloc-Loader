@@ -14,4 +14,4 @@ build:
 after_build:
   - cmd: ECHO nuget pack Sources\UnlocLoader\UnlocLoader.nuspec -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
   - cmd: nuget pack Sources\UnlocLoader\UnlocLoader.nuspec -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
-  - cmd: appveyor PushArtifact "UnlocLoader.%GitVersion_NuGetVersion%.nupkg"
+  - cmd: appveyor PushArtifact "Sources\UnlocLoader\UnlocLoader.%GitVersion_NuGetVersion%.nupkg"
