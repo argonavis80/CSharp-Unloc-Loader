@@ -6,6 +6,16 @@
     public class Location
     {
         /// <summary>
+        /// Change reason of the entry.
+        /// </summary>
+        public ChangeReason ChangeReason { get; set; }
+
+        /// <summary>
+        /// Details of change.
+        /// </summary>
+        public ChangeDetails[] ChangeDetails { get; set; }
+
+        /// <summary>
         /// Official UN/LOCODE of location.
         /// </summary>
         public string UNLOC { get; set; }
@@ -16,14 +26,29 @@
         public string Name { get; set; }
 
         /// <summary>
+        /// Spelling name of location.
+        /// </summary>
+        public string SpellingName { get; set; }
+
+        /// <summary>
+        /// Two-letter code of country.
+        /// </summary>
+        public string CountryId { get; set; }
+
+        /// <summary>
         /// Country of location.
         /// </summary>
-        public virtual Country Country { get; set; }
+        public Country Country { get; set; }
 
         /// <summary>
         /// Position of location if available.
         /// </summary>
-        public virtual Position Position { get; set; }
+        public Position Position { get; set; }
+
+        /// <summary>
+        /// Remarks
+        /// </summary>
+        public string Remarks { get; set; }
 
         /// <inheritdoc />
         public override string ToString()

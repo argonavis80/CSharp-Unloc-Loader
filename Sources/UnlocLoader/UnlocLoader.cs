@@ -23,8 +23,10 @@ namespace UnlocLoader
         /// </summary>
         public UnlocLoader()
         {
+            var locationParser = new LocationParser();
+
             _countryLoader = new CountryLoader();
-            _locationLoader = new LocationLoader();
+            _locationLoader = new LocationLoader(locationParser);
             _fileDownloader = new FileDownloader();
 
             _countryLoader.OnInfo += (sender, s) => OnInfo?.Invoke(sender, s);
