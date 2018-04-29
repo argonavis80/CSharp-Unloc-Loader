@@ -39,18 +39,22 @@ namespace UnlocLoader
         }
 
         /// <summary>
-        /// Fetches the UN/LOCODE files and parses the content.
+        /// Fetches the UN/LOCODE files from UNECE server and parses the content.
         /// </summary>
         /// <returns>
         /// An object containing a list of <see cref="Location"/> and <see cref="Country"/>.
         /// </returns>
-        public LoaderResult Load()
+        public LoaderResult LoadFromUnece()
         {
             using (var workspace = new Workspace())
             {
                 var folder = workspace.WorkingFolder;
 
-                DownloadAndExtract(UnlocFileUrl, folder);
+                EmitInfo("Download UN/LOCODE and extract.");
+
+                var file = _fileDownloader.DownloadTemp(UnlocFileUrl);
+
+                Extract(file, folder);
 
                 var countries = _countryLoader.Load(folder);
                 var locations = _locationLoader.Load(folder, countries);
@@ -59,12 +63,29 @@ namespace UnlocLoader
             }
         }
 
-        private void DownloadAndExtract(string url, string folder)
+        /// <summary>
+        /// Parses the UN/LOCODE from a local file.
+        /// </summary>
+        /// <returns>
+        /// An object containing a list of <see cref="Location"/> and <see cref="Country"/>.
+        /// </returns>
+        public LoaderResult LoadFromFile(string file)
         {
-            EmitInfo("Download UN/LOCODE and extract.");
+            using (var workspace = new Workspace())
+            {
+                var folder = workspace.WorkingFolder;
 
-            var file = _fileDownloader.DownloadTemp(url);
+                Extract(file, folder);
 
+                var countries = _countryLoader.Load(folder);
+                var locations = _locationLoader.Load(folder, countries);
+
+                return new LoaderResult(locations, countries);
+            }
+        }
+
+        private static void Extract(string file, string folder)
+        {
             try
             {
                 ZipFile.ExtractToDirectory(file, folder);

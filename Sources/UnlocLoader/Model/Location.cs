@@ -16,7 +16,7 @@
         public ChangeDetails[] ChangeDetails { get; set; }
 
         /// <summary>
-        /// Official UN/LOCODE of location.
+        /// Official UN/LOCODE of location (five-letter code).
         /// </summary>
         public string UNLOC { get; set; }
 
@@ -29,6 +29,11 @@
         /// Spelling name of location.
         /// </summary>
         public string SpellingName { get; set; }
+
+        /// <summary>
+        /// Function of location.
+        /// </summary>
+        public Function[] Functions { get; set; }
 
         /// <summary>
         /// Two-letter code of country.

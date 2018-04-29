@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using UnlocLoader.Model;
 
 namespace UnlocLoader.Sample
 {
@@ -10,18 +12,16 @@ namespace UnlocLoader.Sample
 
             loader.OnWarn += (sender, s) => Console.WriteLine($"Warn: {s}");
             loader.OnInfo += (sender, s) => Console.WriteLine($"Info: {s}");
-            loader.OnTrace += (sender, s) => Console.WriteLine($"Trace: {s}");
 
-            var result = loader.Load();
+            var result = loader.LoadFromUnece();
+            
+            var ports = result.Locations
+                .Where(l => l.Functions.Contains(Function.Port))
+                .ToList();
 
-            foreach (var location in result.Locations)
+            foreach (var port in ports)
             {
-                Console.WriteLine(location.ToString());
-            }
-
-            foreach (var country in result.Countries)
-            {
-                Console.WriteLine(country.ToString());
+                Console.WriteLine(port.ToString());
             }
         }
     }
