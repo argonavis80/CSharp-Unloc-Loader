@@ -11,7 +11,7 @@ namespace UnlocLoader.Test
         [TestMethod]
         public void TestNormalLocation()
         {
-            const string input = ",\"AD\",\"ALV\",\"Andorra la Vella\",\"Andorra la Vella\",,\"--34-6--\",\"AI\",\"0601\",,\"4230N 00131E\",\"\"";
+            const string input = ",\"AD\",\"ALV\",\"Andorra la Vella\",\"Andorra Vella\",,\"--34-6--\",\"AI\",\"0601\",,\"4230N 00131E\",\"\"";
 
             var target = new LocationParser();
 
@@ -24,6 +24,7 @@ namespace UnlocLoader.Test
             Assert.AreEqual("AD", result.CountryId);
             Assert.AreEqual("ADALV", result.UNLOC);
             Assert.AreEqual("Andorra la Vella", result.Name);
+            Assert.AreEqual("Andorra Vella", result.SpellingName);
             Assert.AreEqual(42.5, result.Position.Lat, 0.00001);
             Assert.AreEqual(1.516667, result.Position.Lng, 0.00001);
         }

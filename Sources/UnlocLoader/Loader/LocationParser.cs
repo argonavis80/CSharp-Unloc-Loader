@@ -38,6 +38,7 @@ namespace UnlocLoader.Loader
                 UNLOC = locationId,
                 CountryId = countryId,
                 Name = tokens[3],
+                SpellingName = tokens[4],
                 ChangeReason = changeReason,
                 ChangeDetails = changeDetails,
                 Remarks = remarks

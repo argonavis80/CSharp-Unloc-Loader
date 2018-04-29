@@ -26,6 +26,11 @@
         public string Name { get; set; }
 
         /// <summary>
+        /// Spelling name of location.
+        /// </summary>
+        public string SpellingName { get; set; }
+
+        /// <summary>
         /// Two-letter code of country.
         /// </summary>
         public string CountryId { get; set; }
