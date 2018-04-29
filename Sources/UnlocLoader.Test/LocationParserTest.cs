@@ -27,6 +27,10 @@ namespace UnlocLoader.Test
             Assert.AreEqual("Andorra Vella", result.SpellingName);
             Assert.AreEqual(42.5, result.Position.Lat, 0.00001);
             Assert.AreEqual(1.516667, result.Position.Lng, 0.00001);
+
+            Assert.IsTrue(result.Functions.Any(f => f == Function.Airport));
+            Assert.IsTrue(result.Functions.Any(f => f == Function.RoadTerminal));
+            Assert.IsTrue(result.Functions.Any(f => f == Function.MultimodalFunction));
         }
 
         [TestMethod]
@@ -114,6 +118,49 @@ namespace UnlocLoader.Test
 
             Assert.IsNull(message);
             Assert.AreEqual(remarks, result.Remarks);
+        }
+
+        [TestMethod]
+        [DataRow(",\"AE\",\"HAT\",\"Hatta\",\"Hatta\",\"DU\",\"0\",\"RL\",\"1707\",,\"2447N 05607E\",\"@Coo\"", Function.Unknown)]
+        [DataRow(",\"AE\",\"HAT\",\"Hatta\",\"Hatta\",\"DU\",\"1-------\",\"RL\",\"1707\",,\"2447N 05607E\",\"@Coo\"", Function.Port)]
+        [DataRow(",\"AE\",\"HAT\",\"Hatta\",\"Hatta\",\"DU\",\"-2------\",\"RL\",\"1707\",,\"2447N 05607E\",\"@Fun\"", Function.RailTerminal)]
+        [DataRow(",\"AE\",\"HAT\",\"Hatta\",\"Hatta\",\"DU\",\"--3-----\",\"RL\",\"1707\",,\"2447N 05607E\",\"@Nam\"", Function.RoadTerminal)]
+        [DataRow(",\"AE\",\"HAT\",\"Hatta\",\"Hatta\",\"DU\",\"---4----\",\"RL\",\"1707\",,\"2447N 05607E\",\"@Spe\"", Function.Airport)]
+        [DataRow(",\"AE\",\"HAT\",\"Hatta\",\"Hatta\",\"DU\",\"----5---\",\"RL\",\"1707\",,\"2447N 05607E\",\"@Sta\"", Function.PostalExchangeOffice)]
+        [DataRow(",\"AE\",\"HAT\",\"Hatta\",\"Hatta\",\"DU\",\"-----6--\",\"RL\",\"1707\",,\"2447N 05607E\",\"@Sub\"", Function.MultimodalFunction)]
+        [DataRow(",\"AE\",\"HAT\",\"Hatta\",\"Hatta\",\"DU\",\"------7-\",\"RL\",\"1707\",,\"2447N 05607E\",\"@Sub\"", Function.FixedTransportFunction)]
+        [DataRow(",\"AE\",\"HAT\",\"Hatta\",\"Hatta\",\"DU\",\"-------B\",\"RL\",\"1707\",,\"2447N 05607E\",\"@Sub\"", Function.BorderCrossing)]
+        public void TestFunctions(string input, Function function)
+        {
+            var target = new LocationParser();
+
+            var result = target.Parse(input, out var message);
+
+            Assert.IsNull(message);
+            Assert.AreEqual(function, result.Functions[0]);
+        }
+
+        [TestMethod]
+        public void TestCombinedFunctions()
+        {
+            const string input = ",\"AE\",\"HAT\",\"Hatta\",\"Hatta\",\"DU\",\"1-3-5-7-\",\"RL\",\"1707\",,\"2447N 05607E\",\"@Coo@Fun@Nam\"";
+
+            var target = new LocationParser();
+
+            var result = target.Parse(input, out var message);
+
+            Assert.IsNull(message);
+            Assert.IsTrue(result.ChangeDetails.Length == 3);
+
+            Assert.IsTrue(result.Functions.Any(d => d == Function.Port));
+            Assert.IsTrue(result.Functions.Any(d => d == Function.RoadTerminal));
+            Assert.IsTrue(result.Functions.Any(d => d == Function.PostalExchangeOffice));
+            Assert.IsTrue(result.Functions.Any(d => d == Function.FixedTransportFunction));
+
+            Assert.IsTrue(result.Functions.All(d => d != Function.RailTerminal));
+            Assert.IsTrue(result.Functions.All(d => d != Function.Airport));
+            Assert.IsTrue(result.Functions.All(d => d != Function.MultimodalFunction));
+            Assert.IsTrue(result.Functions.All(d => d != Function.BorderCrossing));
         }
     }
 }

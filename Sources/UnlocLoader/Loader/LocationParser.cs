@@ -20,6 +20,7 @@ namespace UnlocLoader.Loader
 
             var countryId = tokens[1];
             var locationId = countryId + tokens[2];
+            var functions = ParseFunction(tokens[6]);
             var changeReason = ParseChangeReason(tokens[0], out message);
             var changeDetails = ParseChangeDetails(tokens[11], out var remarks);
 
@@ -29,9 +30,7 @@ namespace UnlocLoader.Loader
             var lng = PositionParser.ParseLongitude(posToken);
 
             if (locationId.Length != 5)
-            {
                 message = $"Location with invalid UN/LOCODE found: {locationId}";
-            }
 
             var location = new Location
             {
@@ -39,6 +38,7 @@ namespace UnlocLoader.Loader
                 CountryId = countryId,
                 Name = tokens[3],
                 SpellingName = tokens[4],
+                Functions = functions,
                 ChangeReason = changeReason,
                 ChangeDetails = changeDetails,
                 Remarks = remarks
@@ -56,6 +56,34 @@ namespace UnlocLoader.Loader
             }
 
             return location;
+        }
+
+        private static ChangeReason ParseChangeReason(string token, out string message)
+        {
+            message = null;
+            token = token.Trim().Trim('"');
+
+            if (string.IsNullOrWhiteSpace(token))
+                return ChangeReason.None;
+
+            switch (token)
+            {
+                case "X":
+                    return ChangeReason.MarkedForDeletion;
+                case "#":
+                    return ChangeReason.ChangeLocationName;
+                case "|":
+                    return ChangeReason.ChangeOther;
+                case "+":
+                    return ChangeReason.Added;
+                case "=":
+                    return ChangeReason.Reference;
+                case "!":
+                    return ChangeReason.Retained;
+                default:
+                    message = $"Invalid change reason: {token}";
+                    return ChangeReason.None;
+            }
         }
 
         private static ChangeDetails[] ParseChangeDetails(string token, out string remarks)
@@ -86,32 +114,40 @@ namespace UnlocLoader.Loader
             return reasons.ToArray();
         }
 
-        private static ChangeReason ParseChangeReason(string token, out string message)
+        private static Function[] ParseFunction(string token)
         {
-            message = null;
             token = token.Trim().Trim('"');
 
-            if (string.IsNullOrWhiteSpace(token))
-                return ChangeReason.None;
+            var reasons = new List<Function>();
 
-            switch (token)
-            {
-                case "X":
-                    return ChangeReason.MarkedForDeletion;
-                case "#":
-                    return ChangeReason.ChangeLocationName;
-                case "|":
-                    return ChangeReason.ChangeOther;
-                case "+":
-                    return ChangeReason.Added;
-                case "=":
-                    return ChangeReason.Reference;
-                case "!":
-                    return ChangeReason.Retained;
-                default:
-                    message = $"Invalid change reason: {token}";
-                    return ChangeReason.None;
-            }
+            if (token.Contains("0"))
+                reasons.Add(Function.Unknown);
+
+            if (token.Contains("1"))
+                reasons.Add(Function.Port);
+
+            if (token.Contains("2"))
+                reasons.Add(Function.RailTerminal);
+
+            if (token.Contains("3"))
+                reasons.Add(Function.RoadTerminal);
+
+            if (token.Contains("4"))
+                reasons.Add(Function.Airport);
+
+            if (token.Contains("5"))
+                reasons.Add(Function.PostalExchangeOffice);
+
+            if (token.Contains("6"))
+                reasons.Add(Function.MultimodalFunction);
+
+            if (token.Contains("7"))
+                reasons.Add(Function.FixedTransportFunction);
+
+            if (token.Contains("B"))
+                reasons.Add(Function.BorderCrossing);
+
+            return reasons.ToArray();
         }
     }
 }
