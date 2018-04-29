@@ -9,7 +9,7 @@ using UnlocLoader.Model;
 
 namespace UnlocLoader.Loader
 {
-    public class CountryLoader : LoaderBase
+    public class CountryLoader : LogEmiter
     {
         public List<Country> Load(string folder)
         {
@@ -69,8 +69,8 @@ namespace UnlocLoader.Loader
             
             var posToken = tokens.FirstOrDefault(regex.IsMatch);
 
-            var lat = ParseLatitude(posToken);
-            var lng = ParseLongitude(posToken);
+            var lat = PositionParser.ParseLatitude(posToken);
+            var lng = PositionParser.ParseLongitude(posToken);
 
             if (countryId.Length != 2)
             {

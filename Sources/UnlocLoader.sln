@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnlocLoader", "UnlocLoader\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnlocLoader.Sample", "UnlocLoader.Sample\UnlocLoader.Sample.csproj", "{A3996601-E0F3-45A3-B26D-658165ECC6DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnlocLoader.Test", "UnlocLoader.Test\UnlocLoader.Test.csproj", "{24D08222-683F-43B4-A2A0-FBA6735AD1A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A3996601-E0F3-45A3-B26D-658165ECC6DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3996601-E0F3-45A3-B26D-658165ECC6DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3996601-E0F3-45A3-B26D-658165ECC6DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24D08222-683F-43B4-A2A0-FBA6735AD1A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24D08222-683F-43B4-A2A0-FBA6735AD1A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24D08222-683F-43B4-A2A0-FBA6735AD1A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24D08222-683F-43B4-A2A0-FBA6735AD1A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
