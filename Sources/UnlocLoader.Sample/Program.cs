@@ -19,7 +19,10 @@ namespace UnlocLoader.Sample
                 .Where(l => l.Functions.Contains(Function.Port))
                 .ToList();
 
-            var r = result.Locations.Where(l => l.CountryId == "SB").ToList();
+            foreach (var port in ports)
+            {
+                Console.WriteLine(port.ToString());
+            }
         }
     }
 }
