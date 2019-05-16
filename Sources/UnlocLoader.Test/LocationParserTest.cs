@@ -9,10 +9,11 @@ namespace UnlocLoader.Test
     public class LocationParserTest
     {
         [TestMethod]
-        public void TestNormalLocation()
+        [DataRow(",\"AD\",\"ALV\",\"Andorra la Vella\",\"Andorra Vella\",,\"--34-6--\",\"AI\",\"0601\",,\"4230N 00131E\",\"\"", "Andorra la Vella", "Andorra Vella")]
+        [DataRow(",\"AD\",\"ALV\",\"Name,With,Comma\",\"Name,With,Comma\",,\"--34-6--\",\"AI\",\"0601\",,\"4230N 00131E\",\"\"", "Name,With,Comma", "Name,With,Comma")]
+        [DataRow(",\"AD\",\"ALV\",\"!§$%&//()\",\"+#''*'\",,\"--34-6--\",\"AI\",\"0601\",,\"4230N 00131E\",\"\"", "!§$%&//()", "+#''*'")]
+        public void TestNormalLocation(string input, string name, string spellingName)
         {
-            const string input = ",\"AD\",\"ALV\",\"Andorra la Vella\",\"Andorra Vella\",,\"--34-6--\",\"AI\",\"0601\",,\"4230N 00131E\",\"\"";
-
             var target = new LocationParser();
 
             var result = target.Parse(input, out var message);
@@ -23,8 +24,8 @@ namespace UnlocLoader.Test
             Assert.IsTrue(result.ChangeDetails.Length == 0);
             Assert.AreEqual("AD", result.CountryId);
             Assert.AreEqual("ADALV", result.UNLOC);
-            Assert.AreEqual("Andorra la Vella", result.Name);
-            Assert.AreEqual("Andorra Vella", result.SpellingName);
+            Assert.AreEqual(name, result.Name);
+            Assert.AreEqual(spellingName, result.SpellingName);
             Assert.AreEqual(42.5, result.Position.Lat, 0.00001);
             Assert.AreEqual(1.516667, result.Position.Lng, 0.00001);
 

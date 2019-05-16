@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnlocLoader.Core;
@@ -11,7 +12,8 @@ namespace UnlocLoader.Loader
         public Location Parse(string source, out string message)
         {
             message = null;
-            var tokens = source.Split(',').Select(t => t.Trim('"')).ToArray();
+
+            var tokens = ExtractTokens(source);
 
             if (string.IsNullOrWhiteSpace(tokens[2]) && string.IsNullOrWhiteSpace(tokens[6]))
                 return null; // This is a country.
@@ -56,6 +58,33 @@ namespace UnlocLoader.Loader
             }
 
             return location;
+        }
+
+        private static string[] ExtractTokens(string source)
+        {
+            var count = 0;
+            var matches = new List<Match>();
+            var regex = new Regex("\"[^\"]*\"");
+
+            var tokenizedSource = regex.Replace(source, match =>
+            {
+                matches.Add(match);
+                return $"{count++}";
+            });
+
+            var tokens = tokenizedSource.Split(',');
+
+            for (var i = 0; i < tokens.Length; i++)
+            {
+                if (string.IsNullOrWhiteSpace(tokens[i]))
+                    continue;
+
+                var tokenIndex = int.Parse(tokens[i]);
+
+                tokens[i] = matches[tokenIndex].Value.Trim('"');
+            }
+
+            return tokens;
         }
 
         private static ChangeReason ParseChangeReason(string token, out string message)
