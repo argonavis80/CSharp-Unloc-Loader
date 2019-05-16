@@ -11,7 +11,7 @@ namespace UnlocLoader.Loader
         public Location Parse(string source, out string message)
         {
             message = null;
-            var tokens = source.Split(',').Select(t => t.Trim('"')).ToArray();
+            var tokens = source.Replace("\",\"", "|").Split('|').Select(t => t.Trim('"')).ToArray();
 
             if (string.IsNullOrWhiteSpace(tokens[2]) && string.IsNullOrWhiteSpace(tokens[6]))
                 return null; // This is a country.
