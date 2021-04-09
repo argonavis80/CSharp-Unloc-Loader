@@ -12,7 +12,7 @@ namespace UnlocLoader
     /// </summary>
     public class UnlocLoader : LogEmiter
     {
-        private const string UnlocFileUrl = "http://www.unece.org/fileadmin/DAM/cefact/locode/loc182csv.zip";
+        private const string UnlocFileUrl = "https://unece.org/sites/default/files/2020-12/loc202csv.zip";
 
         private readonly CountryLoader _countryLoader;
         private readonly LocationLoader _locationLoader;
