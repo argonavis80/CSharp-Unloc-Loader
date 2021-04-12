@@ -26,7 +26,7 @@ namespace UnlocLoader.Loader
 
             foreach (var fileInfo in files)
             {
-                using (var reader = new StreamReader(fileInfo.FullName, Encoding.Default))
+                using (var reader = new StreamReader(fileInfo.FullName, Encoding.GetEncoding("ISO-8859-1")))
                 {
                     while (!reader.EndOfStream)
                     {
