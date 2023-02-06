@@ -12,8 +12,7 @@ namespace UnlocLoader
     /// </summary>
     public class UnlocLoader : LogEmiter
     {
-        //private const string UnlocFileUrl = "https://unece.org/sites/default/files/2020-12/loc202csv.zip";
-        private readonly string _unlocFileUrl;
+        private readonly string _unlocFileUrl = "https://service.unece.org/trade/locode/loc222csv.zip";
 
         private readonly CountryLoader _countryLoader;
         private readonly LocationLoader _locationLoader;
@@ -24,10 +23,9 @@ namespace UnlocLoader
         /// </summary>
         public UnlocLoader(string unlocFileUrl)
         {
-            if (string.IsNullOrWhiteSpace(unlocFileUrl))
-                throw new ArgumentNullException("unlocFileUrl cannot be null");
-
-            _unlocFileUrl = unlocFileUrl;
+            if (!string.IsNullOrWhiteSpace(unlocFileUrl))
+                _unlocFileUrl = unlocFileUrl;
+            
             var locationParser = new LocationParser();
 
             _countryLoader = new CountryLoader();
