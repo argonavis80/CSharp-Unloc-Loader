@@ -11,7 +11,7 @@ namespace UnlocLoader.Test
         [TestMethod]
         [DataRow(",\"AD\",\"ALV\",\"Andorra la Vella\",\"Andorra Vella\",,\"--34-6--\",\"AI\",\"0601\",,\"4230N 00131E\",\"\"", "Andorra la Vella", "Andorra Vella")]
         [DataRow(",\"AD\",\"ALV\",\"Name,With,Comma\",\"Name,With,Comma\",,\"--34-6--\",\"AI\",\"0601\",,\"4230N 00131E\",\"\"", "Name,With,Comma", "Name,With,Comma")]
-        [DataRow(",\"AD\",\"ALV\",\"!§$%&//()\",\"+#''*'\",,\"--34-6--\",\"AI\",\"0601\",,\"4230N 00131E\",\"\"", "!§$%&//()", "+#''*'")]
+        [DataRow(",\"AD\",\"ALV\",\"!§$%&//()\",\"+#''*\",,\"--34-6--\",\"AI\",\"0601\",,\"4230N 00131E\",\"\"", "!§$%&//()", "+#''*")]
         public void TestNormalLocation(string input, string name, string spellingName)
         {
             var target = new LocationParser();

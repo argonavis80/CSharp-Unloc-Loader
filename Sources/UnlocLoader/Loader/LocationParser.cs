@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnlocLoader.Core;
@@ -7,15 +6,24 @@ using UnlocLoader.Model;
 
 namespace UnlocLoader.Loader
 {
+    /// <summary>
+    /// Location Parser
+    /// </summary>
     public class LocationParser : ILocationParser
     {
+        /// <summary>
+        /// Parse string
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public Location Parse(string source, out string message)
         {
             message = null;
 
             var tokens = ExtractTokens(source);
 
-            if (string.IsNullOrWhiteSpace(tokens[2]) && string.IsNullOrWhiteSpace(tokens[6]))
+            if (tokens.Length <= 1 || string.IsNullOrWhiteSpace(tokens[2]) && string.IsNullOrWhiteSpace(tokens[6]))
                 return null; // This is a country.
 
             var regex = new Regex(@"^\d{4}[NS] \d{5}[EW]$");
@@ -73,15 +81,16 @@ namespace UnlocLoader.Loader
             });
 
             var tokens = tokenizedSource.Split(',');
+            char[] charsToTrim = { '\'', '"', ' ' };
 
             for (var i = 0; i < tokens.Length; i++)
             {
-                if (string.IsNullOrWhiteSpace(tokens[i]))
+                if (string.IsNullOrWhiteSpace(tokens[i].Trim(charsToTrim)))
                     continue;
 
-                var tokenIndex = int.Parse(tokens[i]);
+                var tokenIndex = int.Parse(tokens[i].Trim(charsToTrim));
 
-                tokens[i] = matches[tokenIndex].Value.Trim('"');
+                tokens[i] = matches[tokenIndex].Value.Trim(charsToTrim);
             }
 
             return tokens;
