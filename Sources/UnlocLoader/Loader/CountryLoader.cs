@@ -39,7 +39,7 @@ namespace UnlocLoader.Loader
                         {
                             var tokens = line.Split(',').Select(t => t.Trim('"')).ToArray();
 
-                            if (!string.IsNullOrWhiteSpace(tokens[2]) || !string.IsNullOrWhiteSpace(tokens[6]))
+                            if (tokens.Length <= 1 || !string.IsNullOrWhiteSpace(tokens[2]) || !string.IsNullOrWhiteSpace(tokens[6]))
                                 continue; // This is a location. Skip.
 
                             var country = ParseCountry(tokens);
