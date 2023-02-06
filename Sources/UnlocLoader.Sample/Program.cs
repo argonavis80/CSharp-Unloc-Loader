@@ -8,7 +8,7 @@ namespace UnlocLoader.Sample
     {
         private static void Main()
         {
-            var loader = new UnlocLoader("https://service.unece.org/trade/locode/loc222csv.zip");
+            var loader = new UnlocLoader();
 
             loader.OnWarn += (sender, s) => Console.WriteLine($"Warn: {s}");
             loader.OnInfo += (sender, s) => Console.WriteLine($"Info: {s}");
