@@ -21,7 +21,7 @@ namespace UnlocLoader
         /// <summary>
         /// Create a new instance of <see cref="UnlocLoader"/>.
         /// </summary>
-        public UnlocLoader(string unlocFileUrl)
+        public UnlocLoader(string unlocFileUrl = null)
         {
             if (!string.IsNullOrWhiteSpace(unlocFileUrl))
                 _unlocFileUrl = unlocFileUrl;
